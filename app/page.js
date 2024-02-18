@@ -3,7 +3,6 @@ import { Client, Databases, ID } from "appwrite";
 import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
 import BlogPost from "@/components/BlogCard";
-import { loadBindings } from "next/dist/build/swc";
 
 export default function Home() {
   const client = new Client();
@@ -20,6 +19,10 @@ export default function Home() {
     "65cd41ed2f965647e101",
     []
   );
+
+  promise.then((res) => {
+    setBlogs(res.documents);
+  });
  // Empty dependency array ensures that this effect runs only once on component mount
 
   return (
