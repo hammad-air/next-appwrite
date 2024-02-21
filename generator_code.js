@@ -4,7 +4,7 @@ export default function Home() {
   const client = new Client();
   client
     .setEndpoint("https://cloud.appwrite.io/v1")
-    .setProject("");
+    .setProject("65cc08f2ab0d791f531e");
   const databases = new Databases(client);
 
   let a = [

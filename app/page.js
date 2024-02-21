@@ -22,18 +22,18 @@ export default function Home() {
       return first100Chars;
     }
   }
-  
   const client = new Client();
+
   const [blogs, setBlogs] = useState([]);
 
   client
     .setEndpoint("https://cloud.appwrite.io/v1")
-    .setProject("");
+    .setProject("65cc08f2ab0d791f531e");
   const databases = new Databases(client);
 
   let promise = databases.listDocuments(
-    "",
-    "", 
+    "65cd41e3a8565db4d05e",
+    "65cd41ed2f965647e101", 
     []
   );
 
