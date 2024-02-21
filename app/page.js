@@ -1,5 +1,6 @@
 "use client"
-import { Client, Databases, ID } from "appwrite";
+
+import { Client, Databases } from "appwrite";
 import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
 import BlogPost from "@/components/BlogCard";
@@ -22,31 +23,34 @@ export default function Home() {
       return first100Chars;
     }
   }
-  const client = new Client();
 
   const [blogs, setBlogs] = useState([]);
 
-  client
-    .setEndpoint("https://cloud.appwrite.io/v1")
-    .setProject("65cc08f2ab0d791f531e");
-  const databases = new Databases(client);
+  useEffect(() => {
+    const client = new Client();
+    client
+      .setEndpoint("https://cloud.appwrite.io/v1")
+      .setProject("65cc08f2ab0d791f531e");
+    const databases = new Databases(client);
 
-  let promise = databases.listDocuments(
-    "65cd41e3a8565db4d05e",
-    "65cd41ed2f965647e101", 
-    []
-  );
+    const promise = databases.listDocuments(
+      "65cd41e3a8565db4d05e",
+      "65cd41ed2f965647e101", 
+      []
+    );
 
-  promise.then((res) => {
-    setBlogs(res.documents);
-  });
- // Empty dependency array ensures that this effect runs only once on component mount
+    promise.then((res) => {
+      setBlogs(res.documents);
+    }).catch((error) => {
+      console.error("Error fetching blogs:", error);
+    });
+  }, []); // Empty dependency array ensures that this effect runs only once on component mount
 
   return (
     <>
       <Navbar />
       <div className="container mx-auto mt-8">
-     <center> <h1 className="text-3xl font-bold mb-6">Latest Blog</h1></center>
+        <center><h1 className="text-3xl font-bold mb-6">Latest Blog</h1></center>
         <div className="">
           {blogs.length === 0 && "Loading...!"}
           {blogs.map((blog, index) => (
